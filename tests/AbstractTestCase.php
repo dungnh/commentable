@@ -13,19 +13,19 @@ declare(strict_types=1);
 
 namespace Artisanry\Tests\Commentable;
 
-use GrahamCampbell\TestBench\AbstractPackageTestCase;
+use Orchestra\Testbench\TestCase;
 
-abstract class AbstractTestCase extends AbstractPackageTestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
-     * Get the service provider class.
+     * Get package service providers.
      *
      * @param \Illuminate\Interfaces\Foundation\Application $app
      *
-     * @return string
+     * @return array<int, class-string>
      */
-    protected function getServiceProviderClass($app)
+    protected function getPackageProviders($app)
     {
-        return \Artisanry\Commentable\CommentableServiceProvider::class;
+        return [\Artisanry\Commentable\CommentableServiceProvider::class];
     }
 }

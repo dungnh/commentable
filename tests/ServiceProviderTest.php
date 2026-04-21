@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace Artisanry\Tests\Commentable;
 
-use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
-
 class ServiceProviderTest extends AbstractTestCase
 {
-    use ServiceProviderTrait;
+    public function testServiceProviderIsLoaded(): void
+    {
+        $this->assertTrue(
+            $this->app->providerIsLoaded(\Artisanry\Commentable\CommentableServiceProvider::class)
+        );
+    }
 }
