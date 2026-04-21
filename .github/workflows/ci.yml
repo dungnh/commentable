@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        laravel: ["12.*", "13.*"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          tools: composer:v2
+          coverage: none
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ matrix.laravel }}-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-${{ matrix.laravel }}-
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies for Laravel ${{ matrix.laravel }}
+        run: composer update --prefer-dist --no-interaction --no-progress --with-all-dependencies laravel/framework:${{ matrix.laravel }}
+
+      - name: Run test suite
+        run: vendor/bin/phpunit
