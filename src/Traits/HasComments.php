@@ -48,7 +48,7 @@ trait HasComments
      *
      * @return static
      */
-    public function comment(array $data, Model $creator, Model $parent)
+    public function comment(array $data, Model $creator, ?Model $parent)
     {
         $commentableModel = $this->commentableModel();
 
@@ -70,7 +70,7 @@ trait HasComments
      *
      * @return mixed
      */
-    public function updateComment($id, $data, Model $parent)
+    public function updateComment($id, $data, ?Model $parent)
     {
         $commentableModel = $this->commentableModel();
 
